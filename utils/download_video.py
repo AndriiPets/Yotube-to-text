@@ -14,6 +14,3 @@ def download_from_url(url: str) -> str:
     out_file = video.download(filename=PATH)
 
     return out_file
-
-
-download_from_url("https://www.youtube.com/watch?v=U3aXWizDbQ4")
