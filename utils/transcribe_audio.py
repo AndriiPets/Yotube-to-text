@@ -29,4 +29,5 @@ def transcribe(audio_path: str, task="transcribe"):
         [2, transcribe_token_id if task == "transcribe" else translate_token_id]
     ]
     text = pipe(audio_path)["text"]
+    print("done")
     return skip_tokens(text)

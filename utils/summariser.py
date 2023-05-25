@@ -8,10 +8,11 @@ doc_store, preprocessor = initialize_store()
 
 
 def summarize(inputs: str, *args) -> str:
-    print("summarizing text")
+    print("summarizing text...")
     text_to_store(inputs, doc_store, preprocessor)
     summarizer = TransformersSummarizer(
         model_name_or_path=MODEL, max_length=200, progress_bar=True
     )
     summary = summarizer.predict(documents=doc_store.get_all_documents())
+    print("done")
     return "\n".join([s.meta["summary"] for s in summary])
