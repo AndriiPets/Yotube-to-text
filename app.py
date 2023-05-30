@@ -7,8 +7,8 @@ URL = "https://www.youtube.com/watch?v=U3aXWizDbQ4"
 
 
 def main():
-    # summarize_video_from_url(URL)
-    generate_questions(URL)
+    summarize_video_from_url(URL)
+    # generate_questions(URL)
 
 
 def summarize_video_from_url(url):
