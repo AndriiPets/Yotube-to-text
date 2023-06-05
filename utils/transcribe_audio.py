@@ -2,6 +2,8 @@ import torch
 from transformers import pipeline
 from utils.timer_decorator import timeit
 from decouple import config
+from pydub import AudioSegment
+from pydub.utils import make_chunks
 import re
 import requests
 import json
@@ -39,6 +41,12 @@ def transcribe(audio_path: str, task="transcribe"):
     ]
     text = pipe(audio_path)["text"]
     return skip_tokens(text)
+
+
+def prepare_audio(audio_path: str):
+    sound_file = AudioSegment.from_mp3(audio_path)
+    chunk_length = 30000
+    chunks = make_chunks(sound_file, chunk_length=chunk_length)
 
 
 @timeit

@@ -15,9 +15,9 @@ async def main():
 
 async def summarize_video_from_url(url):
     video = download_from_url(url)
-    text = await api_async_transcribe(video)
-    # tldr = llm_summarize(text)
-    print(text)
+    text = transcribe(video)
+    tldr = llm_summarize(text)
+    print(tldr)
 
 
 def generate_questions(url):

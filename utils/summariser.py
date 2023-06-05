@@ -1,5 +1,6 @@
 from haystack.nodes import TransformersSummarizer
 from haystack.nodes import PromptNode
+from haystack.errors import HuggingFaceInferenceError
 from utils.file_to_store import text_to_store
 from utils.document_store import initialize_store
 from decouple import config
@@ -8,6 +9,7 @@ import json
 import aiohttp
 import asyncio
 from utils.timer_decorator import timeit
+import time
 
 
 MODEL = "facebook/bart-large-cnn"
@@ -40,11 +42,20 @@ def api_summarize(inputs: str) -> str:
 @timeit
 def llm_summarize(inputs: str) -> str:
     text_to_store(inputs, doc_store, preprocessor)
-
-    prompt_node = PromptNode(
-        model_name_or_path=LLM_MODEL, api_key=API_KEY, max_length=256
-    )
-    summary = prompt_node.prompt(
-        prompt_template="summarization", documents=doc_store.get_all_documents()
-    )
+    summary = "Failed request"
+    for _ in range(3):
+        try:
+            prompt_node = PromptNode(
+                model_name_or_path=LLM_MODEL, api_key=API_KEY, max_length=246
+            )
+            summary = prompt_node.prompt(
+                prompt_template="summarization", documents=doc_store.get_all_documents()
+            )
+            break
+        except HuggingFaceInferenceError as err:
+            print(f"Error number: {err.status_code}")
+            if err.status_code == "503":
+                print("Wainting 10 seconds for model to load...")
+        print(f"cycle number: {_}")
+        time.sleep(10)
     return summary
