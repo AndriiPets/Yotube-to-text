@@ -1,7 +1,7 @@
 from pytube import YouTube
 import os
 
-PATH = "./audio/audio.mp3"
+PATH = "audio\\audio.mp3"
 
 
 def download_from_url(url: str) -> str:

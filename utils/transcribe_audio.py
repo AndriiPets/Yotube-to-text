@@ -36,6 +36,7 @@ def skip_tokens(text: str) -> str:
 
 @timeit
 def transcribe(audio_path: str, task="transcribe"):
+    prepare_audio(audio_path)
     pipe.model.config.forced_decoder_ids = [
         [2, transcribe_token_id if task == "transcribe" else translate_token_id]
     ]
@@ -44,9 +45,14 @@ def transcribe(audio_path: str, task="transcribe"):
 
 
 def prepare_audio(audio_path: str):
-    sound_file = AudioSegment.from_mp3(audio_path)
+    sound_file = AudioSegment.from_file(audio_path)
     chunk_length = 30000
     chunks = make_chunks(sound_file, chunk_length=chunk_length)
+    print(chunks)
+    data = []
+    for i, chunk in enumerate(chunks):
+        chunk_name = f"audio\\chunks\\chunk{i}.mp3"
+        chunk.export(chunk_name, format="mp3")
 
 
 @timeit
