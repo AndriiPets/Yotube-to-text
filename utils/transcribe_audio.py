@@ -49,7 +49,7 @@ def prepare_audio(audio_path: str):
     chunk_length = 30000
     chunks = make_chunks(sound_file, chunk_length=chunk_length)
     print(chunks)
-    data = [0]
+    data = []
     for i, chunk in enumerate(chunks):
         chunk_name = f"audio\\chunks\\chunk{i}.mp3"
         chunk.export(chunk_name, format="mp3")
