@@ -44,6 +44,7 @@ def llm_summarize(inputs: str) -> str:
     text_to_store(inputs, doc_store, preprocessor)
     summary = "Failed request"
     for _ in range(3):
+        print(f"Summarising from API attempt: {_}")
         try:
             prompt_node = PromptNode(
                 model_name_or_path=LLM_MODEL, api_key=API_KEY, max_length=246
@@ -53,9 +54,8 @@ def llm_summarize(inputs: str) -> str:
             )
             break
         except HuggingFaceInferenceError as err:
-            print(f"Error number: {err.status_code}")
+            print(f"Error number: {err}")
             if err.status_code == "503":
                 print("Wainting 10 seconds for model to load...")
-        print(f"cycle number: {_}")
         time.sleep(10)
     return summary

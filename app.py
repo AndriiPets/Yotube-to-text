@@ -3,6 +3,7 @@ from utils.transcribe_audio import transcribe, api_transcribe, api_async_transcr
 from utils.summariser import summarize, api_summarize, llm_summarize
 from qa_generator import generate_qa
 import asyncio
+import re
 
 
 URL = "https://www.youtube.com/watch?v=U3aXWizDbQ4"
@@ -15,9 +16,10 @@ async def main():
 
 async def summarize_video_from_url(url):
     video = download_from_url(url)
-    text = transcribe(video)
-    # tldr = llm_summarize(text)
-    print(text)
+    text = await api_async_transcribe(video)
+    tldr = llm_summarize(text)
+    # summary = re.match(tldr, r"(?<=Summary:).*")
+    print(tldr)
 
 
 def generate_questions(url):

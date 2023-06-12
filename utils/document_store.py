@@ -10,7 +10,7 @@ def initialize_store() -> tuple[InMemoryDocumentStore, PreProcessor]:
         clean_header_footer=True,
         split_by="word",
         split_length=200,
-        split_respect_sentence_boundary=True,
+        split_respect_sentence_boundary=False,
     )
 
     return document_store, preprocessor
