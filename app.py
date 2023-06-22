@@ -18,8 +18,8 @@ async def summarize_video_from_url(url):
     video = download_from_url(url)
     text = await api_async_transcribe(video)
     tldr = llm_summarize(text)
-    # summary = re.match(tldr, r"(?<=Summary:).*")
-    print(tldr)
+    summary = " ".join(text).split(":")[-1]
+    print(summary)
 
 
 def generate_questions(url):
