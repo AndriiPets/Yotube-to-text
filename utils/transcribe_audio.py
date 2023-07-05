@@ -63,15 +63,6 @@ def prepare_audio(audio_path: str):
 
 @timeit
 async def api_async_transcribe(audio_path: str) -> list[str]:
-    # path = prepare_audio(audio_path=audio_path)
-    # data = []
-    # for file in os.listdir(path=path):
-    #    file_path = "audio/chunks/" + file
-    #    print(f"reading file: {file}")
-    #    with open(file_path, "rb") as f:
-    #        file_data = f.read()
-    #        data.append(file_data)
-
     for _ in range(4):
         print(f"Transcribing from API attempt: {_}")
         try:
