@@ -68,10 +68,6 @@ async def api_async_transcribe(audio_path: str) -> list[str]:
         try:
             api_response = await query_api(audio_path, API_URL_BACKUP)
             transcription = api_response["text"].lower()
-            # timestamps = [
-            #    [chunk["text"].lower(), chunk["timestamp"][0], chunk["timestamp"][1]]
-            #    for chunk in api_response["chunks"]
-            # ]
 
             return transcription
         except:
