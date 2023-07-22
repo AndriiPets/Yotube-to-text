@@ -11,7 +11,6 @@ URL = "https://www.youtube.com/watch?v=U3aXWizDbQ4"
 
 async def main():
     await summarize_video_from_url(URL)
-    # generate_questions(URL)
 
 
 async def summarize_video_from_url(url):
