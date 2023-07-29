@@ -9,7 +9,6 @@ import requests
 import json
 import asyncio
 import aiohttp
-import os
 import base64
 
 MODEL_NAME = "openai/whisper-tiny"
