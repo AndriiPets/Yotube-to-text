@@ -1,5 +1,5 @@
 from haystack.document_stores import InMemoryDocumentStore
-from haystack.nodes import PreProcessor, Crawler
+from haystack.nodes import PreProcessor
 
 
 def initialize_store() -> tuple[InMemoryDocumentStore, PreProcessor]:
