@@ -1,5 +1,5 @@
 from haystack.nodes import TransformersSummarizer
-from haystack.nodes import PromptNode
+from haystack.nodes import PromptNode, PromptTemplate
 from haystack.errors import HuggingFaceInferenceError
 from utils.file_to_store import text_to_store
 from utils.document_store import initialize_store
@@ -13,11 +13,12 @@ import time
 
 
 MODEL = "facebook/bart-large-cnn"
-LLM_MODEL = "OpenAssistant/oasst-sft-1-pythia-12b"
+LLM_MODEL = "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5"
 MODEL_API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 API_KEY = config("HF_API_KEY")
 
 headers = {"Authorization": f"Bearer {API_KEY}"}
+summarization_template = PromptTemplate("deepset/summarization")
 
 doc_store, preprocessor = initialize_store()
 
@@ -50,7 +51,8 @@ def llm_summarize(inputs: str) -> str:
                 model_name_or_path=LLM_MODEL, api_key=API_KEY, max_length=246
             )
             summary = prompt_node.prompt(
-                prompt_template="summarization", documents=doc_store.get_all_documents()
+                prompt_template=summarization_template,
+                documents=doc_store.get_all_documents(),
             )
             break
         except HuggingFaceInferenceError as err:

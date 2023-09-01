@@ -17,7 +17,7 @@ async def summarize_video_from_url(url):
     video = download_from_url(url)
     text = await api_async_transcribe(video)
     tldr = llm_summarize(text)
-    summary = " ".join(text).split(":")[-1]
+    summary = " ".join(tldr).split(":")[-1]
     print(summary)
 
 
